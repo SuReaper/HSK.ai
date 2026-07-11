@@ -48,7 +48,6 @@ What really ties it together is pairing conversational AI with genuine on-chain 
 ### Steps
 
 ```bash
-# 1. Clone with submodules (includes HSP SDK)
 git clone --recursive https://github.com/SuReaper/HSK.ai.git
 cd HSK.ai
 ```
@@ -57,28 +56,37 @@ cd HSK.ai
 </p>
 
 ```bash
-# 2. Install dependencies
 npm install
 ```
+<p align="center">
+  <img src="./npminstall.svg" alt="Clone" width="100%">
+</p>
 
 ```bash
-# 3. Copy the env template (all values pre-filled except API key)
 cp .env.example .env.local
 ```
+<p align="center">
+  <img src="./clone.svg" alt="Clone" width="100%">
+</p>
 
 ```bash
 #    Register at https://hsp-hackathon.hashkeymerchant.com/register
 #    Set HSP_API_KEY in .env.local
 #    Without it the app runs in read-only mode (observe + verify, no settle).
 ```
+<p align="center">
+  <img src="./optionalhsp.svg" alt="Clone" width="100%">
+</p>
 
 ```bash
-# 5. Compile and run
 npx next build --webpack
 npx next start
 ```
+<p align="center">
+  <img src="./compilerun.svg" alt="Clone" width="100%">
+</p>
 
-Open [http://localhost:3000](http://localhost:3000).
+Now open [http://localhost:3000](http://localhost:3000).
 
 ### Post-Setup
 
