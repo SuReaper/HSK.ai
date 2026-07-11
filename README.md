@@ -55,20 +55,24 @@ cd HSK.ai
 <p align="center">
   <img src="./clone.svg" alt="Clone" width="100%">
 </p>
+
 ```bash
 # 2. Install dependencies
 npm install
 ```
+
 ```bash
 # 3. Copy the env template (all values pre-filled except API key)
 cp .env.example .env.local
 ```
+
 ```bash
 # 4. (Optional) Get your own HSP API key
 #    Register at https://hsp-hackathon.hashkeymerchant.com/register
 #    Set HSP_API_KEY in .env.local
 #    Without it the app runs in read-only mode (observe + verify, no settle).
 ```
+
 ```bash
 # 5. Compile and run
 npx next build --webpack
