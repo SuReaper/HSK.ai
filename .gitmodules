@@ -1,0 +1,7 @@
+[submodule "HSP Repo/hsp"]
+	path = HSP Repo/hsp
+	url = https://github.com/project-hsp/hsp
+	branch = main
+[submodule "lib/forge-std"]
+	path = lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
