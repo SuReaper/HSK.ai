@@ -35,6 +35,7 @@ The part worth explaining is what happens between the sentence and the signature
 
 The agent doesn't stop once the intent is built, either. It stays attached through broadcast, block confirmations, and final settlement, and returns a receipt that can be checked independently against the chain rather than just trusted. Every payment intent is also written to HashKey Mainnet as a permanent record, so a transaction executed on testnet still leaves the same kind of traceable history a mainnet payment would.
 
+Demo Video: https://youtu.be/SYI74JYPido
 Live Demo (BETA): https://hskai.netlify.app
 
 ## Features
