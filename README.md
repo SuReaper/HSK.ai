@@ -12,35 +12,33 @@
 
 # HSK.ai
 
-Every hard problem in Web3 settlement has quietly been solved over the last few years — finality, cross-chain messaging, cryptographic authorization. The part nobody fixed is the fifteen minutes before any of that matters, where a person has to figure out which chain they're on, copy an address correctly, and hope the gas estimate holds. HSK.ai removes that fifteen minutes. Tell it who to pay and how much, and the sentence itself becomes the transaction — parsed, routed, and carried through to on-chain finality without a form, a chain switch, or a pasted address in sight.
+Sending a crypto payment normally means knowing which chain you're on, having the right address, holding the right gas token, and — if the recipient is on a different chain — routing the asset through a bridge yourself. HSK.ai takes a plain-language instruction like "send 5 USDC to Bob" and does that resolution work in the background: matching the recipient, checking balances, picking a route, and getting the transaction signed and settled.
 
-Nothing about the interface asks the user to think like an engineer. Name the recipient, the amount, the asset. The system takes it from there.
+The part worth explaining is what happens between the sentence and the signature. A single instruction requires the agent to look up the recipient against a saved contact list, check native and token balances across nine separately connected chains to see whether the payment is even possible, and construct an EIP-712 typed mandate — a structured, signable payload rather than a raw transaction — for the HashKey Settlement Protocol (HSP) to act on. If the recipient is on a different chain than the sender, the agent routes CCIP-BnM tokens from Ethereum Sepolia to Base, Arbitrum, Optimism, Polygon, or Avalanche through Chainlink's CCIP network, and it does this by reading the fee quote directly off the router contract at request time rather than using a fixed estimate. All of that — who, how much, which route, what it costs — gets shown to the user as one intent card before anything is broadcast. The wallet, not HSK.ai, is what actually signs and holds the funds; the app never has custody at any point.
 
-The complexity is real, it's just been moved somewhere the user never has to look. A single instruction sends the agent through recipient resolution against a stored contact graph, live balance checks across nine independently connected EVM networks, and construction of an EIP-712 payment mandate — all resolved before anything is ever put in front of the user for approval. If the payment needs to leave its origin chain, HSK.ai routes CCIP-BnM assets from Ethereum Sepolia to Base, Arbitrum, Optimism, Polygon, or Avalanche through Chainlink's CCIP network, pricing the bridge fee straight off the router contract in the moment rather than estimating it in advance. What would normally take several disconnected tools and a fair amount of trust collapses into one intent card the user can actually read: recipient, route, fee, settlement path, all in one place, all reviewed before a single signature is requested. The wallet signs; HSK.ai never holds, touches, or has custody of the funds at any point.
-
-The part that separates this from a chatbot bolted onto a bridge SDK is that nothing gets handed off once the intent is parsed. The agent rides with the payment through broadcast, confirmation, and settlement, and closes the loop with a receipt that can be checked independently rather than taken on faith. Every intent is also written permanently to HashKey Mainnet, so a transaction run entirely on testnet still leaves behind the same kind of durable, checkable record that a live payment would.
+The agent doesn't stop once the intent is built, either. It stays attached through broadcast, block confirmations, and final settlement, and returns a receipt that can be checked independently against the chain rather than just trusted. Every payment intent is also written to HashKey Mainnet as a permanent record, so a transaction executed on testnet still leaves the same kind of traceable history a mainnet payment would.
 
 Demo Link (BETA): https://hskai.netlify.app
 
 ## Features
 
-- **Multilingual** — Full English and Japanese UI, with the language switch taking effect immediately, no reload, no lost state
-- **Multichain** — WalletConnect / Reown AppKit handles wallet connection and provisions all 9 supported chains on its own (HashKey Testnet & Mainnet, Ethereum, Sepolia, Base Sepolia, Arbitrum Sepolia, OP Sepolia, Polygon Amoy, Avalanche Fuji); cross-chain settlement runs through the Chainlink CCIP Router, with HashKey Chain as the home network
-- **AI Chat Interface** — A tool-calling agent that turns a plain sentence into a structured, reviewable payment — nothing moves until the request has been compiled into an intent card the user can actually read
-- **HSP Integration** — Wired directly into the HashKey Payment (HSP) SDK for mandate signing, coordinator registration, and settlement that resolves to a linked, verifiable explorer record rather than a bare transaction hash
-- **Cross-Chain CCIP Bridge** — Moves CCIP-BnM assets from Ethereum Sepolia to Base, Arbitrum, Optimism, Polygon, or Avalanche testnets through Chainlink CCIP, with live fee quoting, handled ERC-20 approvals, and CCIP explorer message tracking end to end (testnet-only for now)
-- **Payment Intent Anchoring** — Every intent hash gets written permanently to HashKey Chain Mainnet (chain ID 177) as standing proof it happened, with the wallet auto-switching networks and anchoring status tracked live against the deployed mainnet and testnet contracts
-- **Recurring Payments** — Recurring USDC transfers are registered on-chain through the HSKRecurringAnchor contract on HashKey Mainnet — weekly, biweekly, or monthly — with a running record of every execution
-- **Contacts & Address Book** — Save a name once, and the agent resolves it to the right wallet address on its own from then on — no more hunting for a 42-character string in your notes app
-- **Payment History** — One log covering status, anchoring, HSP verification, and CCIP message tracking, so there's never a reason to check four different places for the state of a payment
-- **Token Balance Awareness** — Native (HSK/ETH) and ERC-20 (USDC, CCIP-BnM) balances stay live across every connected chain, so the agent's suggestions are grounded in what you can actually afford to send
-- **Multi-Provider AI** — Bring your own key for OpenAI, DeepSeek, Kimi, local Ollama, or any OpenAI-compatible endpoint; the key lives in browser localStorage and never touches a server
-- **Intent Confirmation Flow** — Every payment stops at a structured intent card — recipient, amount, token, network, fee breakdown, settlement route — and waits for the user before anything is broadcast
-- **Transaction Receipt Tracking** — Block confirmations, revert detection, and finalization status tracked live via viem's `waitForTransactionReceipt`, so you're watching the payment settle, not guessing whether it did
+- **Multilingual** — English and Japanese UI with runtime language switching; no reload required
+- **Multichain** — WalletConnect / Reown AppKit connects the wallet and adds all 9 supported chains automatically (HashKey Testnet & Mainnet, Ethereum, Sepolia, Base Sepolia, Arbitrum Sepolia, OP Sepolia, Polygon Amoy, Avalanche Fuji); cross-chain settlement runs through the Chainlink CCIP Router, with HashKey Chain as the primary network
+- **AI Chat Interface** — A tool-calling agent that converts a plain-language request into a structured payment intent; nothing is broadcast until the request has been compiled into an intent card and confirmed
+- **HSP Integration** — Uses the HashKey Payment (HSP) SDK for mandate signing, coordinator registration, and settlement, with each transaction linked to its explorer record
+- **Cross-Chain CCIP Bridge** — Sends CCIP-BnM tokens from Ethereum Sepolia to Base, Arbitrum, Optimism, Polygon, or Avalanche testnets via Chainlink CCIP; includes live fee quoting, ERC-20 approval handling, and CCIP explorer message tracking (testnet-only for now)
+- **Payment Intent Anchoring** — Writes each payment intent hash to HashKey Chain Mainnet (chain ID 177) as a permanent on-chain record, with automatic wallet-network switching and anchoring status tracked against the deployed mainnet and testnet contracts
+- **Recurring Payments** — Schedules recurring USDC transfers on-chain through the HSKRecurringAnchor contract on HashKey Mainnet, on weekly, biweekly, or monthly cadences, with execution history tracked per schedule
+- **Contacts & Address Book** — Save a name once and the agent resolves it to the correct wallet address automatically on future requests
+- **Payment History** — One log covering transaction status, anchoring records, HSP verification, and CCIP message tracking
+- **Token Balance Awareness** — Native (HSK/ETH) and ERC-20 (USDC, CCIP-BnM) balances are checked live across every connected chain, and the agent's suggestions are based on what's actually available
+- **Multi-Provider AI** — Bring your own API key for OpenAI, DeepSeek, Kimi, local Ollama, or any OpenAI-compatible endpoint; the key is stored in browser localStorage and never sent to a server
+- **Intent Confirmation Flow** — Every payment requires explicit confirmation via an intent card showing recipient, amount, token, network, fee breakdown, and settlement route before broadcast
+- **Transaction Receipt Tracking** — Block confirmations, revert detection, and finalization status tracked live via viem's `waitForTransactionReceipt`
 
 ## Installation
 
-Getting from a clean clone to a signed transaction takes five commands and no configuration guesswork — the app tells you exactly what's missing as you go.
+Five commands from a clean clone to a running instance; the app flags anything missing (like the HSP key) as you go.
 
 ### Prerequisites
 
@@ -102,7 +100,7 @@ Now open [http://localhost:3000](http://localhost:3000).
 
 ## Supported Chains
 
-Nine networks are wired in from day one, spanning HSK's own chains and the major EVM testnets used for cross-chain settlement:
+Nine networks, covering HSK's own chains plus the EVM testnets used for cross-chain routing:
 
 | Chain | ID |
 |---|---|
@@ -117,7 +115,7 @@ Nine networks are wired in from day one, spanning HSK's own chains and the major
 
 ## Architecture
 
-Four layers, each doing one job: the client captures intent and gets it signed, the serverless layer routes requests, the core engine does the actual reasoning and mandate-building, and the on-chain layer is where the payment becomes real.
+Four layers: the client captures intent and gets it signed, the serverless layer routes requests between them, the core engine builds mandates and quotes routes, and the on-chain layer is where settlement actually happens.
 
 ```mermaid
 flowchart TD
