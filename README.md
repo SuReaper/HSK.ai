@@ -67,7 +67,6 @@ cp .env.example .env.local
 ```
 
 ```bash
-# 4. (Optional) Get your own HSP API key
 #    Register at https://hsp-hackathon.hashkeymerchant.com/register
 #    Set HSP_API_KEY in .env.local
 #    Without it the app runs in read-only mode (observe + verify, no settle).
