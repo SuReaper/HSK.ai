@@ -20,6 +20,8 @@ Behind that simple request, there's a fair amount happening under the hood. The 
 
 What really ties it together is pairing conversational AI with genuine on-chain settlement. HSK.ai doesn't just figure out what you're asking for—it stays with the payment through its full lifecycle: parsing the intent, broadcasting the transaction, tracking confirmations, and returning a cryptographic receipt once everything settles. Each payment is also anchored to a permanent record on HashKey Mainnet, so even testnet activity carries the kind of verifiability you'd expect from a live production network.
 
+Demo Link (BETA): https://hskai.netlify.app
+
 ## Features
 
 
