@@ -28,7 +28,7 @@ What really ties it together is pairing conversational AI with genuine on-chain 
 - **AI Chat Interface** — Natural language payments; tool-calling flow creates reviewable intent cards before any funds move
 - **HSP Integration** — On-chain verifiable payment proofs via HashKey Payment (HSP) SDK; mandate signing, coordinator registration, and verifiable settlement with explorer links
 - **Cross-Chain CCIP Bridge** — Send CCIP-BnM tokens from Ethereum Sepolia to Base, Arbitrum, Optimism, Polygon, or Avalanche testnets via Chainlink CCIP; client-side fee quotes, ERC-20 approval flow with receipt confirmation, and CCIP explorer message tracking (CCIP is currently only for testnet.)
-- **Payment Intent Anchoring** — Permanently record payment intent hashes on HashKey Chain Mainnet (177) as on-chain proof; auto wallet-switch with anchoring status tracking
+- **Payment Intent Anchoring** — Permanently record payment intent hashes on HashKey Chain Mainnet (177) as on-chain proof; auto wallet-switch with anchoring status tracking. Deployed Contracts on mainnet and testnet.
 - **Recurring Payments** — Schedule automated recurring USDC transfers registered on-chain via HSKRecurringAnchor contract on HashKey Mainnet; weekly, biweekly, or monthly cadence with execution tracking
 - **Contacts & Address Book** — Save and resolve contacts by name; AI resolves labels to addresses automatically from contact list
 - **Payment History** — Full transaction log with status, anchors, HSP verification, and CCIP message tracking
@@ -88,13 +88,13 @@ npx next start
 
 Now open [http://localhost:3000](http://localhost:3000).
 
-### Post-Setup
+### Post-Setup for testing
 
 1. **Connect your wallet** — the app auto-adds all 9 supported chains on connection
 2. **Configure your AI provider** — click the gear ⚙️ next to the chat input, enter your API key and endpoint
 3. **Get test tokens** — for CCIP-BnM tokens, visit the [CCIP Faucet](https://faucets.chain.link/ccip); for HSK testnet tokens, use the HashKey Testnet faucet
-4. **Start chatting** — try "Send 0.01 CCIP-BnM to Alice on Base Sepolia" or "Send 5 USDC to Bob"
-
+4. **Start chatting** — try "Send 0.01 CCIP-BnM to Alice on Base Sepolia" or "Send 5 USDC to Bob or this or that address."
+5. You may switch to mainnet anytime for the HashKey Chain Mainnet.
 > If `--recursive` was forgotten during clone, run `git submodule update --init` to fetch the HSP SDK.
 
 
