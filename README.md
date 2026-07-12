@@ -26,6 +26,12 @@
 - [Architecture Graph](#architecture-graph)
 - [Scripts](#scripts)
 
+> [!NOTE]
+> * This project WASN'T vibecoded. Every singular feature has been implemented by spending an extensive amount of time and effort, from choices including UI/UX of our app, all the way to the core of it. Making this project took +14 Days fulltime for me, about 7-12 hours per day. By the way we did use ai in writing codes of some parts of our application, so it can be delivered before the timeline, which costed about +$300-400 worth of tokens.
+> 
+> * In making of this project, i was genuinely shocked at the speed and cost of gas fees on HashKey Chain, the transactions were almost instantaneous, and the cost of them were merely any. Integrations with HSK, CCIP Router and HSP went mostly smoothly and the docs were well written.
+
+
 
 # HSK.ai
 
@@ -395,5 +401,6 @@ flowchart TD
 | `forge build` | Compile Solidity contracts |
 | `forge test` | Run contract tests |
 | `forge script contracts/script/Deploy.s.sol:DeployAll --rpc-url hashkey-mainnet --broadcast` | Deploy all contracts |
+
 
 
